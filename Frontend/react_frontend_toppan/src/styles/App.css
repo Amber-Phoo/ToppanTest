@@ -41,8 +41,6 @@
   position: absolute;
   width: 1920px;
   height: 1080px;
-  left: 0px;
-  top: 0px;
 
   background: #FFFFFF;
   border: 1px solid #000000;
@@ -194,6 +192,86 @@
   font-weight: 500;
   font-size: 40px;
   line-height: 48px;
+
+  color: #000000;
+}
+
+.accordionWrapper {
+  padding: 36px 45px 4px 46px;
+  background: #fff;
+  /* float: left; */
+  width: 500px;
+  box-sizing: border-box;
+  margin: 285px 710px;
+  border: 1px solid #000000;
+}
+
+.open {
+  margin: 196px 710px !important;
+}
+
+.book-borrowers {
+  /* .book-borrowers */
+  /* position: absolute; */
+  width: 332px;
+  height: 267px;
+  margin: -17px 38px 15px 38px;
+}
+
+.customer {
+  /* .customer */
+
+  /* position: absolute; */
+  width: 331px;
+  height: 79px;
+  margin-bottom: 15px;
+  background: #F4CFCF;
+  border-radius: 10px;
+}
+
+.customer-name {
+  position: absolute;
+  width: 257px;
+  height: 29px;
+  margin: 25px 36px 25px 38px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 29px;
+  text-align: center;
+  /* identical to box height */
+
+  color: #000000;
+}
+
+.no-data {
+  /* #container */
+
+  box-sizing: border-box;
+
+  width: 500px;
+  height: 70.8px;
+  margin: 505px 710px;
+
+  background: #FFFFFF;
+  border: 1px solid #000000;
+}
+
+.no-data-text {
+
+  width: 123px;
+  height: 22px;
+  margin: 24px 187px 24.8px 190px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+
+  /* identical to box height */
+  text-align: center;
 
   color: #000000;
 }
