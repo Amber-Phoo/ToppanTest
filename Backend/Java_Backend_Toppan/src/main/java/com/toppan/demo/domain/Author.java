@@ -3,21 +3,19 @@ package com.toppan.demo.domain;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.FetchType;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "books")
-public class Book {
+@Table(name = "authors")
+public class Author {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
@@ -27,15 +25,15 @@ public class Book {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private LocalDateTime updatedAt;
 
-	@OneToMany(mappedBy = "book",fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "author",fetch = FetchType.LAZY)
 	private List<AuthorBook> authorBooks;
 
-	public Book() {
+	public Author() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Book(String name) {
+	public Author(String name) {
 		// TODO Auto-generated constructor stub
 		this.name = name;
 		this.createdAt = LocalDateTime.now();
@@ -74,16 +72,8 @@ public class Book {
 		this.updatedAt = updatedAt;
 	}
 
-	public List<AuthorBook> getAuthorBooks() {
-		return authorBooks;
-	}
-
-	public void setAuthorBooks(List<AuthorBook> authorBooks) {
-		this.authorBooks = authorBooks;
-	}
-
 	@Override
 	public String toString() {
-		return "Book [Id=" + id + ", name=" + name + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + "]";
+		return "Author [Id=" + id + ", name=" + name + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + "]";
 	}
 }

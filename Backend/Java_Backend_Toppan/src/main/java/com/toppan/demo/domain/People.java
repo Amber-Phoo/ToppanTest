@@ -1,43 +1,37 @@
 package com.toppan.demo.domain;
 
 import java.time.LocalDateTime;
-import java.util.List;
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.FetchType;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "books")
-public class Book {
+@Table(name = "people")
+public class People {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String name;
+	private int country_id;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private LocalDateTime createdAt;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private LocalDateTime updatedAt;
 
-	@OneToMany(mappedBy = "book",fetch = FetchType.LAZY)
-	private List<AuthorBook> authorBooks;
-
-	public Book() {
+	public People() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Book(String name) {
+	public People(String name, int country_id) {
 		// TODO Auto-generated constructor stub
 		this.name = name;
+		this.country_id = country_id;
 		this.createdAt = LocalDateTime.now();
 		this.updatedAt = LocalDateTime.now();
 	}
@@ -58,6 +52,14 @@ public class Book {
 		this.name = name;
 	}
 
+	public int getCountry() {
+		return country_id;
+	}
+
+	public void setCountry(int country_id) {
+		this.country_id = country_id;
+	}
+
 	public LocalDateTime getCreatedAt() {
 		return createdAt;
 	}
@@ -74,16 +76,8 @@ public class Book {
 		this.updatedAt = updatedAt;
 	}
 
-	public List<AuthorBook> getAuthorBooks() {
-		return authorBooks;
-	}
-
-	public void setAuthorBooks(List<AuthorBook> authorBooks) {
-		this.authorBooks = authorBooks;
-	}
-
 	@Override
 	public String toString() {
-		return "Book [Id=" + id + ", name=" + name + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + "]";
+		return "People [Id=" + id + ", name=" + name + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + "]";
 	}
 }
