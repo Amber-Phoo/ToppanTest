@@ -31,7 +31,7 @@ public class PeopleServiceImpl implements PeopleService {
 		peopleRepository.deleteById(id);
 	}
 
-	public List<People> findByName(String name) {
-		return peopleRepository.findByName(name);
+	public List<String> getPersonNamesByIds(List<Integer> ids) {
+		return peopleRepository.getPersonNamesByIds(ids);
 	}
 }

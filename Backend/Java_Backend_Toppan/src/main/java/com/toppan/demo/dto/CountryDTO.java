@@ -15,7 +15,7 @@ public class CountryDTO {
 	}
 
 	public CountryDTO ConvertDTO(Country c) {
-		C1 c1 = new C1(c.name, c.code);
+		C1 c1 = new C1(c.getName(), c.getCode());
 		return new CountryDTO(c1);
 	}
 

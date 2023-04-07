@@ -8,11 +8,10 @@ import org.springframework.stereotype.Repository;
 
 import com.toppan.demo.domain.People;
 
-
 @Repository
 public interface PeopleRepository extends JpaRepository<People, Integer> {
 
-    @Query
-    public List<People> findByName(String name);
+	@Query("SELECT name" + "	FROM People where id in (?1)")
+	public List<String> getPersonNamesByIds(List<Integer> peopleIds);
 
 }

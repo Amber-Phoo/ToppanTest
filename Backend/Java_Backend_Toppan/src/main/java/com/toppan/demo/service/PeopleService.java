@@ -13,7 +13,7 @@ public interface PeopleService {
 
 	public Optional<People> findById(Integer Id);
 
-	public List<People> findByName(String name);
+	public List<String> getPersonNamesByIds(List<Integer> ids);
 
 	public void deleteById(Integer id);
 
