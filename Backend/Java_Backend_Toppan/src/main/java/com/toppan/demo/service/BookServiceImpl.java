@@ -79,7 +79,7 @@ public class BookServiceImpl implements BookService {
 
 	public List<BookDTO> getTop3ReadBookByCountry(String countryCode) {
 		List<BookDTO> results = new ArrayList<BookDTO>();
-		Integer countryId = CountryHelper.GetCountryId(countryCode);
+		Integer countryId = new CountryHelper().GetCountryId(countryCode);
 		System.out.println("CountryId :" + countryId);
 		List<Integer> personIds = peopleService.getPersonIdsByCountryId(countryId);
 		System.out.println(personIds);

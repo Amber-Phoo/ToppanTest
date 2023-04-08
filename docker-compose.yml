@@ -1,24 +1,20 @@
 version: "3"
 
-volumes:
-  database:
-    name: database_java
-
 services:
 
-  db:
+  db_toppan:
     image: 'postgres:13.1-alpine'
-    container_name: db
+    container_name: db_toppan
     restart: unless-stopped
     ports:
       - 5432:5432
     environment:
-      POSTGRES_DB=toppan_library
-      POSTGRES_USER=compose-postgres
-      POSTGRES_PASSWORD=compose-postgres
+      POSTGRES_DB: toppan_library
+      POSTGRES_USER: compose-postgres
+      POSTGRES_PASSWORD: compose-postgres
 
-  frontend_react:
-    container_name: frontend
+  frontend_react_toppan:
+    container_name: frontend_toppan
     restart: unless-stopped
     environment:
       TZ: Asia/Singapore
@@ -31,8 +27,8 @@ services:
     ports:
       - 3000:3000
   
-  backend_java:
-    container_name: backend_java
+  backend_java_toppan:
+    container_name: backend_java_toppan
     restart: unless-stopped
     build:
       context: ./Backend/Java_Backend_Toppan
@@ -40,14 +36,14 @@ services:
       args:
         environment: dev
         status: stable
-    environment:
-      SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/toppan_library
-      SPRING_DATASOURCE_USERNAME=compose-postgres
-      SPRING_DATASOURCE_PASSWORD=compose-postgres
-      SPRING_JPA_HIBERNATE_DDL_AUTO=update
     ports:
       - 8080:8080
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db_toppan:5432/toppan_library
+      SPRING_DATASOURCE_USERNAME: compose-postgres
+      SPRING_DATASOURCE_PASSWORD: compose-postgres
+      SPRING_JPA_HIBERNATE_DDL_AUTO: create-drop
     depends_on:
-      - db
+      - db_toppan
     links:
-      - db
+      - db_toppan

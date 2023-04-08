@@ -28,7 +28,7 @@ import com.toppan.demo.util.CountryHelper;
 @RequestMapping(path = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
 @CrossOrigin(origins = "*")
 public class MyRestController {
-	protected final String blockMessage = "{\"Error\": \"You do not have permission to access this page.\"}";
+	
 	protected final String errorMessage = "{\"message\": \"invalid parameter\"}";
 	protected final String notFoundMessage = "{\"message\": \"no results\"}";
 	@Autowired
@@ -46,16 +46,12 @@ public class MyRestController {
 	@Autowired
 	BookRentService bookRentService;
 
-	@RequestMapping(path = "/", produces = MediaType.APPLICATION_JSON_VALUE)
-	public String defaultBlocker() {
-		return blockMessage;
-	}
 
 	@GetMapping("/getTop3ReadBooks")
 	public ResponseEntity<?> getTop3ReadBooks(@RequestParam(required = false) String country_code) {
 
 		if (country_code != null) {
-			if (CountryHelper.ValidateCountryCode(country_code)) {
+			if (new CountryHelper().ValidateCountryCode(country_code)) {
 				List<BookDTO> bookList = bookService.getTop3ReadBookByCountry(country_code);
 				return new ResponseEntity<>(bookList.size() > 0 ? bookList : notFoundMessage, HttpStatus.OK);
 			} else
@@ -69,56 +65,16 @@ public class MyRestController {
 
 	@GetMapping("/install")
 	public String install() {
-		/*
-		 * Book book1 = new Book("C#"); bookService.saveBook(book1);
-		 * 
-		 * Book book2 = new Book("Java"); bookService.saveBook(book2); Book book3 = new
-		 * Book("React"); bookService.saveBook(book3); Book book4 = new Book("Angular");
-		 * bookService.saveBook(book4); Book book5 = new Book("Nodejs");
-		 * bookService.saveBook(book5); Book book6 = new Book("Docker");
-		 * bookService.saveBook(book6);
-		 * 
-		 * 
-		 * Author author = new Author("Bed"); authorService.saveAuthor(author); Author
-		 * author2 = new Author("Kino"); authorService.saveAuthor(author2); Author
-		 * author3 = new Author("Pribuck"); authorService.saveAuthor(author3);
-		 * 
-		 * AuthorBook authorBook=new AuthorBook(new AuthorBookKey(9,3));
-		 * authorBookService.saveAuthorBook(authorBook); AuthorBook authorBook2=new
-		 * AuthorBook(new AuthorBookKey(10,4));
-		 * authorBookService.saveAuthorBook(authorBook2); AuthorBook authorBoo3=new
-		 * AuthorBook(new AuthorBookKey(11,5));
-		 * authorBookService.saveAuthorBook(authorBoo3);
-		 * 
-		 * People people = new People("John", 1); peopleService.savePeople(people);
-		 * People people2 = new People("Mike", 1); peopleService.savePeople(people2);
-		 * People people3 = new People("Jos", 1); peopleService.savePeople(people3);
-		 */
-
-//		People people = new People("May", 2);
-//		peopleService.savePeople(people);
-//		People people2 = new People("June", 3);
-//		peopleService.savePeople(people2);
-//		People people3 = new People("April", 4);
-//		peopleService.savePeople(people3);
-
-//		BookRent bookRent = new BookRent(5, 12);
-//		bookRentService.saveBookRent(bookRent);
-//		BookRent bookRent2 = new BookRent(5, 12);
-//		bookRentService.saveBookRent(bookRent2);
-//		BookRent bookRent3 = new BookRent(3, 11);
-//		bookRentService.saveBookRent(bookRent3);
-
 		return "{ \"Result\": \"OK\" }";
 	}
 
 	@GetMapping("/getRandomCountry")
 	public ResponseEntity<?> getRandomCountry() {
 		try {
-			List<Country> countryList = CountryHelper.getCountryList();
+			List<Country> countryList = new CountryHelper().getCountryListUpdate();
 			Random random = new Random();
-			//Country c = countryList.get(random.nextInt(countryList.size() - 1));
-			Country c = countryList.get(random.nextInt(2));
+			Country c = countryList.get(random.nextInt(countryList.size() - 1));
+			//Country c = countryList.get(random.nextInt(2));
 			return new ResponseEntity<>(new CountryDTO().ConvertDTO(c), HttpStatus.OK);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
