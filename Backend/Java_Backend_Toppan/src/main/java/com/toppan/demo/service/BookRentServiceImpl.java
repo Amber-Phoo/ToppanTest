@@ -26,4 +26,12 @@ public class BookRentServiceImpl implements BookRentService {
 		return bookRentRepository.getTop3RenterByBookId(id);
 	}
 
+	public List<Integer> getTop3BooksByPersonIds(List<Integer> personIds) {
+		return bookRentRepository.getTop3BooksByPersonIds(personIds);
+	}
+
+	public List<Integer> getTop3RenterByBookIdAndPersonIds(Integer id, List<Integer> personIds) {
+		return bookRentRepository.getTop3RenterByBookIdAndPersonIds(id,personIds);
+	}
+
 }

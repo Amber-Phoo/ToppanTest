@@ -14,6 +14,7 @@ import com.toppan.demo.domain.Book;
 import com.toppan.demo.dto.BookDTO;
 import com.toppan.demo.dto.IBookAuthor;
 import com.toppan.demo.repository.BookRepository;
+import com.toppan.demo.util.CountryHelper;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -61,7 +62,11 @@ public class BookServiceImpl implements BookService {
 
 		for (IBookAuthor b : Unique_authorBooks) {
 			List<Integer> personIds = bookRentService.getTop3RenterByBookId(b.getBookId());
-			List<String> personNames = peopleService.getPersonNamesByIds(personIds);
+			List<String> personNames = new ArrayList<String>();
+			for(Integer i : personIds) {
+				String name=peopleService.getPersonNameById(i);
+				personNames.add(name);
+			}
 			BookDTO bookDto = new BookDTO();
 			bookDto.name = b.getBookName();
 			bookDto.author = b.getAuthorName();
@@ -73,8 +78,34 @@ public class BookServiceImpl implements BookService {
 	}
 
 	public List<BookDTO> getTop3ReadBookByCountry(String countryCode) {
-		// TODO Auto-generated method stub
-		return null;
+		List<BookDTO> results = new ArrayList<BookDTO>();
+		Integer countryId = CountryHelper.GetCountryId(countryCode);
+		System.out.println("CountryId :" + countryId);
+		List<Integer> personIds = peopleService.getPersonIdsByCountryId(countryId);
+		System.out.println(personIds);
+		
+		List<Integer> bookIds = bookRentService.getTop3BooksByPersonIds(personIds);
+		List<IBookAuthor> authorBooks = authorBookService.getBookAuthorByBookId(bookIds);
+		// to remove a book with more than 1 author
+		Collection<IBookAuthor> Unique_authorBooks = authorBooks.stream().collect(Collectors
+				.toMap(IBookAuthor::getBookName, Function.identity(), (AuthorBook1, AuthorBook2) -> AuthorBook1))
+				.values();
+
+		for (IBookAuthor b : Unique_authorBooks) {
+			List<Integer> topRenterIds = bookRentService.getTop3RenterByBookIdAndPersonIds(b.getBookId(),personIds);
+			List<String> personNames = new ArrayList<String>();
+			for(Integer i : topRenterIds) {
+				String name=peopleService.getPersonNameById(i);
+				personNames.add(name);
+			}
+			BookDTO bookDto = new BookDTO();
+			bookDto.name = b.getBookName();
+			bookDto.author = b.getAuthorName();
+			bookDto.borrower = personNames;
+			results.add(bookDto);
+			System.out.println(bookDto);
+		}
+		return results;
 	}
 
 }

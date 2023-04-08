@@ -4,19 +4,17 @@ import BookContext from '../context/book-context';
 import Customer from './Customer';
 
 const BookItem = ({ book }) => {
-    const { author, name, id } = book;
+    const { author, name, id, borrower } = book;
     const { bookContext, dispatch } = useContext(BookContext);
 
     const handleClick = () => {
         if (!bookContext.accordion.open || bookContext.accordion.bookId !== id) {
             bookContext.accordion = { open: true, bookId: id };
             dispatch({ type: 'SET_ACCORDION', accordion: bookContext.accordion });
-            console.log("open accordion");
         }
         else {
             bookContext.accordion = { open: false, bookId: id };
             dispatch({ type: 'SET_ACCORDION', accordion: bookContext.accordion });
-            console.log("close accordion");
         }
     }
 
@@ -35,9 +33,9 @@ const BookItem = ({ book }) => {
             {
                 bookContext.accordion.bookId === id && bookContext.accordion.open &&
                 <div className='book-borrowers'>
-                    <Customer customer={{name:"FistName_LastName"}}/>
-                    <Customer customer={{name:"FistName_LastName"}}/>
-                    <Customer customer={{name:"FistName_LastName"}}/>
+                    {borrower.map((b, index) => (
+                        <Customer key={index} customer={{ name: b }} />
+                    ))}
                 </div>
             }
         </div>

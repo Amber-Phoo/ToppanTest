@@ -1,0 +1,53 @@
+version: "3"
+
+volumes:
+  database:
+    name: database_java
+
+services:
+
+  db:
+    image: 'postgres:13.1-alpine'
+    container_name: db
+    restart: unless-stopped
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB=toppan_library
+      POSTGRES_USER=compose-postgres
+      POSTGRES_PASSWORD=compose-postgres
+
+  frontend_react:
+    container_name: frontend
+    restart: unless-stopped
+    environment:
+      TZ: Asia/Singapore
+    build:
+      context: ./Frontend/react_frontend_toppan
+      dockerfile: ./Dockerfile
+      args:
+        environment: dev
+        status: stable
+    ports:
+      - 3000:3000
+  
+  backend_java:
+    container_name: backend_java
+    restart: unless-stopped
+    build:
+      context: ./Backend/Java_Backend_Toppan
+      dockerfile: ./Dockerfile
+      args:
+        environment: dev
+        status: stable
+    environment:
+      SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/toppan_library
+      SPRING_DATASOURCE_USERNAME=compose-postgres
+      SPRING_DATASOURCE_PASSWORD=compose-postgres
+      SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+    links:
+      - db

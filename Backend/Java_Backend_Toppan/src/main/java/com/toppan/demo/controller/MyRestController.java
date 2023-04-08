@@ -3,38 +3,20 @@
  */
 package com.toppan.demo.controller;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Random;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.ResourceUtils;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.toppan.demo.domain.Author;
-import com.toppan.demo.domain.AuthorBook;
-import com.toppan.demo.domain.AuthorBookKey;
-import com.toppan.demo.domain.Book;
-import com.toppan.demo.domain.BookRent;
 import com.toppan.demo.domain.Country;
-import com.toppan.demo.domain.People;
 import com.toppan.demo.dto.BookDTO;
 import com.toppan.demo.dto.CountryDTO;
-import com.toppan.demo.dto.IBookAuthor;
 import com.toppan.demo.service.AuthorBookService;
 import com.toppan.demo.service.AuthorService;
 import com.toppan.demo.service.BookRentService;
@@ -43,7 +25,8 @@ import com.toppan.demo.service.PeopleService;
 import com.toppan.demo.util.CountryHelper;
 
 @RestController
-@RequestMapping
+@RequestMapping(path = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
+@CrossOrigin(origins = "*")
 public class MyRestController {
 	protected final String blockMessage = "{\"Error\": \"You do not have permission to access this page.\"}";
 	protected final String errorMessage = "{\"message\": \"invalid parameter\"}";
@@ -72,12 +55,14 @@ public class MyRestController {
 	public ResponseEntity<?> getTop3ReadBooks(@RequestParam(required = false) String country_code) {
 
 		if (country_code != null) {
-			if (CountryHelper.ValidateCountryCode(country_code))
-				return new ResponseEntity<>(bookService.getTop3ReadBookGlobal(), HttpStatus.OK);
-			else
+			if (CountryHelper.ValidateCountryCode(country_code)) {
+				List<BookDTO> bookList = bookService.getTop3ReadBookByCountry(country_code);
+				return new ResponseEntity<>(bookList.size() > 0 ? bookList : notFoundMessage, HttpStatus.OK);
+			} else
 				return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
 		} else {
-			return new ResponseEntity<>(bookService.getTop3ReadBookGlobal(), HttpStatus.OK);
+			List<BookDTO> bookList = bookService.getTop3ReadBookGlobal();
+			return new ResponseEntity<>(bookList.size() > 0 ? bookList : notFoundMessage, HttpStatus.OK);
 		}
 
 	}
@@ -132,7 +117,8 @@ public class MyRestController {
 		try {
 			List<Country> countryList = CountryHelper.getCountryList();
 			Random random = new Random();
-			Country c = countryList.get(random.nextInt(countryList.size() - 1));
+			//Country c = countryList.get(random.nextInt(countryList.size() - 1));
+			Country c = countryList.get(random.nextInt(2));
 			return new ResponseEntity<>(new CountryDTO().ConvertDTO(c), HttpStatus.OK);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

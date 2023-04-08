@@ -10,4 +10,8 @@ public interface BookRentService {
 	public List<Integer> getTop3Books();
 	
 	public List<Integer> getTop3RenterByBookId(Integer id);
+	
+	public List<Integer> getTop3BooksByPersonIds(List<Integer> personIds);
+	
+	public List<Integer> getTop3RenterByBookIdAndPersonIds(Integer id,List<Integer> personIds);
 }

@@ -16,4 +16,11 @@ public interface BookRentRepository extends JpaRepository<BookRent, Integer> {
 
 	@Query("SELECT person_id FROM BookRent where book_id=?1 group by person_id order by Count(person_id) desc limit 3")
 	public List<Integer> getTop3RenterByBookId(Integer id);
+	
+	@Query("SELECT book_id FROM BookRent where person_id in (?1) group by book_id order by Count(book_id) desc limit 3")
+	public List<Integer> getTop3BooksByPersonIds(List<Integer> personIds);
+	
+	@Query("SELECT person_id FROM BookRent where book_id=?1 and person_id in (?2) group by person_id order by Count(person_id) desc limit 3")
+	public List<Integer> getTop3RenterByBookIdAndPersonIds(Integer id,List<Integer> personIds);
+	
 }

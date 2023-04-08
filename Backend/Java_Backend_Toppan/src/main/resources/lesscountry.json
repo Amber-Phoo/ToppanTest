@@ -1,0 +1,37 @@
+[
+{
+"name": "Singapore",
+"dial_code": "+65",
+"code": "SG"
+},
+{
+"name": "United States",
+"dial_code": "+1",
+"code": "US"
+},
+{
+"name": "United Kingdom",
+"dial_code": "+44",
+"code": "GB"
+},
+{
+"name": "Korea, Republic of South Korea",
+"dial_code": "+82",
+"code": "KR"
+},
+{
+"name": "Malaysia",
+"dial_code": "+60",
+"code": "MY"
+},
+{
+"name": "Indonesia",
+"dial_code": "+62",
+"code": "ID"
+},
+{
+"name": "Thailand",
+"dial_code": "+66",
+"code": "TH"
+}	
+]

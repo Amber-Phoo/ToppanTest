@@ -21,9 +21,23 @@ public class CountryHelper {
 		return countryList.stream().anyMatch(p -> p.getCode().equals(countryCode));
 	}
 
+	public static Integer GetCountryId(String countryCode) {
+		Integer countryId = 0;
+		List<Country> countryList = getCountryList();
+		for (int i = 0; i < countryList.size(); i++) {
+
+			if (countryList.get(i).getCode().equals(countryCode)) {
+				System.out.println(countryList.get(i).getCode() + "," + countryCode);
+				countryId = i + 1;
+				break;
+			}
+		}
+		return countryId;
+	}
+
 	public static List<Country> getCountryList() {
 		try {
-			File file = ResourceUtils.getFile("classpath:country.json");
+			File file = ResourceUtils.getFile("classpath:lesscountry.json");
 			ObjectMapper objectMapper = new ObjectMapper();
 			List<Country> countryList = objectMapper.readValue(file, new TypeReference<List<Country>>() {
 			});

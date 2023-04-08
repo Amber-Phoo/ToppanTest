@@ -11,10 +11,11 @@ public interface PeopleService {
 
 	public List<People> getAllPeople();
 
-	public Optional<People> findById(Integer Id);
+	public String getPersonNameById(Integer Id);
 
 	public List<String> getPersonNamesByIds(List<Integer> ids);
 
 	public void deleteById(Integer id);
-
+	
+	public List<Integer> getPersonIdsByCountryId(Integer countryId);
 }

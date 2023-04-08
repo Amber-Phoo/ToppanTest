@@ -4,7 +4,7 @@ const Customer = ({customer}) => {
     const { name } = customer;
 
     return (
-        <div className='customer'>
+        <div id="customer" className='customer'>
             <div className='customer-name overflow'>{name}</div>
         </div>
     )

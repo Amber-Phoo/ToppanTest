@@ -23,8 +23,8 @@ public class PeopleServiceImpl implements PeopleService {
 		return peopleRepository.findAll();
 	}
 
-	public Optional<People> findById(Integer Id) {
-		return peopleRepository.findById(Id);
+	public String getPersonNameById(Integer Id) {
+		return peopleRepository.getPersonNameById(Id);
 	}
 
 	public void deleteById(Integer id) {
@@ -33,5 +33,10 @@ public class PeopleServiceImpl implements PeopleService {
 
 	public List<String> getPersonNamesByIds(List<Integer> ids) {
 		return peopleRepository.getPersonNamesByIds(ids);
+	}
+
+	public List<Integer> getPersonIdsByCountryId(Integer countryId) {
+		// TODO Auto-generated method stub
+		return peopleRepository.getPersonIdsByCountryId(countryId);
 	}
 }
