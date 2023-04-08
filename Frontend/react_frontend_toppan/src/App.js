@@ -17,7 +17,7 @@ function App() {
           let items = response.data;
           let i = 0;
           const bookList = (items).map((item) => {
-            item.id = ++i;
+            item.id = `book-item-${++i}`;
             return item;
           });
           console.log("Book List", bookList)

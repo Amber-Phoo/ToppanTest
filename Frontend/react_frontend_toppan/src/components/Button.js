@@ -6,7 +6,6 @@ const Button = () => {
   const { appContext, dispatch } = useContext(AppContext);
 
   const filterByCountry = () => {
-    console.log("filterByCountry");
     BookDataService.getRandomCountry()
       .then((response) => {
         let country = response.data;

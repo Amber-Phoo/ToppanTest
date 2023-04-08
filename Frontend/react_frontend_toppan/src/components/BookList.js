@@ -12,7 +12,7 @@ const BookList = ({ books }) => {
                 bookContext &&
                 <BookContext.Provider value={{ bookContext, dispatch }}>
                     {books.map((book, index) => (
-                        <BookItem key={book.name} book={book} />
+                        <BookItem key={book.name} book={book} index={index}/>
                     ))}
                 </BookContext.Provider>
             }

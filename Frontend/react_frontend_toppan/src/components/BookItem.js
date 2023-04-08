@@ -3,7 +3,7 @@ import { React, useContext } from 'react';
 import BookContext from '../context/book-context';
 import Customer from './Customer';
 
-const BookItem = ({ book }) => {
+const BookItem = ({ book,index }) => {
     const { author, name, id, borrower } = book;
     const { bookContext, dispatch } = useContext(BookContext);
 
@@ -22,11 +22,11 @@ const BookItem = ({ book }) => {
         <div id={id}>
             <div className='rectangle'>
                 <div className='book-item-detail'>
-                    <p className='no'>{id}</p>
+                    <p className='no'>{index+1}</p>
                     <div className='book-name overflow'>
                         {name}
                     </div>
-                    <div className='vector' onClick={() => handleClick()}><span className='arrow up'></span></div>
+                    <div className='book-toggle' onClick={() => handleClick()}><span className='arrow up'></span></div>
                     <p className='book-item-footer '>by {author}</p>
                 </div>
             </div>
