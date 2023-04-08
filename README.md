@@ -33,3 +33,8 @@ Once complete, run:
 
 React will be running port `3000` accessed by host IP adress. In my case, it's `http://192.168.0.120:3000/`
 
+Run from Docker Desktop (Optional)
+
+![image](https://user-images.githubusercontent.com/100519215/230719810-f4ec4fbc-94a5-4089-a1a9-0b10291560da.png)
+
+
